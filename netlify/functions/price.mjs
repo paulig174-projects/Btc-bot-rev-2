@@ -1,3 +1,0 @@
-import { HttpTransport, InfoClient } from "@nktkas/hyperliquid";
-const res=(statusCode,data)=>({statusCode,headers:{"Content-Type":"application/json","Cache-Control":"no-store"},body:JSON.stringify(data)});
-export const handler=async()=>{try{const info=new InfoClient({transport:new HttpTransport()});const mids=await info.allMids();const price=Number(mids.BTC);if(!Number.isFinite(price)||price<=0)throw Error("Invalid BTC price");return res(200,{ok:true,coin:"BTC",price,timestamp:new Date().toISOString()});}catch(e){return res(502,{ok:false,error:"Price request failed",details:String(e?.message||e).slice(0,200)});}};
